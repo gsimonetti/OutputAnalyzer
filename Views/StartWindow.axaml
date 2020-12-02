@@ -1,0 +1,129 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:OutputAnalyzer.ViewModels;assembly=OutputAnalyzer"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="960" d:DesignHeight="540"
+        x:Class="OutputAnalyzer.Views.StartWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Output Analyzer">
+  <Design.DataContext>
+    <vm:StartWindowViewModel/>
+  </Design.DataContext>
+  <Grid ColumnDefinitions="Auto,*,240" RowDefinitions="*">
+    <StackPanel Grid.Column="0" Margin="16, 16, 8, 16" MinWidth="200">
+      <TextBlock Text="Step 01" HorizontalAlignment="Center" Margin="0, 0, 0, 16" FontSize="{StaticResource FontSizeLarge}"/>
+      <Button Content="Add files" Grid.Column="0" Command="{Binding OnSelectFileCommand}" Margin="0, 0, 0, 16"/>
+      <ListBox Items="{Binding SelectedFiles}" SelectionMode="Toggle">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding PresentationText}" FontFamily="Consolas"/>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Button Content="Clear" Grid.Column="0" Command="{Binding OnClearFilesCommand}" Margin="0, 16, 0, 0"/>
+    </StackPanel>
+    <ScrollViewer Grid.Column="1">
+      <StackPanel Margin="8, 16, 8, 16" MinWidth="320">
+        <TextBlock Text="Step 02" HorizontalAlignment="Center" Margin="0, 0, 0, 16" FontSize="{StaticResource FontSizeLarge}"/>
+        <Grid ColumnDefinitions="100,*" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+          <TextBlock Text="Anderson Darling Test" Grid.Column="0" Grid.Row="0" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <ListBox Items="{Binding AndersonDarlingInputs}" SelectionMode="Toggle" Grid.Column="1" Grid.Row="0" Margin="0, 4">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center" Margin="8, 4"/>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <TextBlock Text="One-Sample T Test" Grid.Column="0" Grid.Row="1" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <ListBox Items="{Binding OneSampleTTestInputs}" SelectionMode="Toggle" Grid.Column="1" Grid.Row="1" Margin="0, 4">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto, Auto" Margin="8">
+                  <TextBlock Text="{Binding FileName}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0, 0, 4, 0"/>
+                  <TextBlock Text="{Binding ParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+                  <TextBox Text="{Binding ParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <TextBlock Text="One-Sample Z Test" Grid.Column="0" Grid.Row="2" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <ListBox Items="{Binding OneSampleZTestInputs}" SelectionMode="Toggle" Grid.Column="1" Grid.Row="2" Margin="0, 4">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid ColumnDefinitions="Auto,*,*" RowDefinitions="Auto, Auto" Margin="8">
+                  <TextBlock Text="{Binding FileName}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0, 0, 4, 0"/>
+                  <TextBlock Text="{Binding FirstParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+                  <TextBox Text="{Binding FirstParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+                  <TextBlock Text="{Binding SecondParameterName}" Grid.Column="2" Grid.Row="0" Margin="4, 0, 4, 0"/>
+                  <TextBox Text="{Binding SecondParameterValue}" Grid.Column="2" Grid.Row="1" Margin="4, 0, 4, 0"/>
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <TextBlock Text="Two-Sample F Test" Grid.Column="0" Grid.Row="3" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <Grid DataContext="{Binding TwoSampleFTestInputs}" Grid.Column="1" Grid.Row="3" ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" IsEnabled="{Binding IsEnabled}" Margin="0, 4">
+            <TextBlock Text="{Binding FileNameA}" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="{Binding FileNameB}" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="{Binding FirstParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding FirstParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+            <TextBlock Text="{Binding SecondParameterName}" Grid.Column="2" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding SecondParameterValue}" Grid.Column="2" Grid.Row="1" Margin="4, 0, 4, 0"/>
+          </Grid>
+          <TextBlock Text="Two-Sample Paired T Test" Grid.Column="0" Grid.Row="4" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <Grid DataContext="{Binding TwoSamplePairedTTestInputs}" Grid.Column="1" Grid.Row="4" ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" IsEnabled="{Binding IsEnabled}" Margin="0, 4">
+            <TextBlock Text="{Binding FileNameA}" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="{Binding FileNameB}" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="{Binding FirstParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding FirstParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+            <TextBlock Text="{Binding SecondParameterName}" Grid.Column="2" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding SecondParameterValue}" Grid.Column="2" Grid.Row="1" Margin="4, 0, 4, 0"/>
+          </Grid>
+          <TextBlock Text="Two-Sample Unpaired T Test" Grid.Column="0" Grid.Row="5" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <Grid DataContext="{Binding TwoSampleUnpairedTTestInputs}" Grid.Column="1" Grid.Row="5" ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" IsEnabled="{Binding IsEnabled}" Margin="0, 4">
+            <TextBlock Text="{Binding FileNameA}" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="{Binding FileNameB}" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="{Binding FirstParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding FirstParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+            <TextBlock Text="{Binding SecondParameterName}" Grid.Column="2" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding SecondParameterValue}" Grid.Column="2" Grid.Row="1" Margin="4, 0, 4, 0"/>
+          </Grid>
+          <TextBlock Text="Two-Sample Unpaired Unequal T Test" Grid.Column="0" Grid.Row="6" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <Grid DataContext="{Binding TwoSampleUnpairedUnequalTTestInputs}" Grid.Column="1" Grid.Row="6" ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" IsEnabled="{Binding IsEnabled}" Margin="0, 4">
+            <TextBlock Text="{Binding FileNameA}" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="{Binding FileNameB}" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="{Binding FirstParameterName}" Grid.Column="1" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding FirstParameterValue}" Grid.Column="1" Grid.Row="1" Margin="4, 0, 4, 0"/>
+            <TextBlock Text="{Binding SecondParameterName}" Grid.Column="2" Grid.Row="0" Margin="4, 0, 4, 0"/>
+            <TextBox Text="{Binding SecondParameterValue}" Grid.Column="2" Grid.Row="1" Margin="4, 0, 4, 0"/>
+          </Grid>
+          <TextBlock Text="One-Way ANOVA" Grid.Column="0" Grid.Row="7" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <ListBox Items="{Binding OneWayAnovaInputs}" SelectionMode="Toggle" Grid.Column="1" Grid.Row="7" IsVisible="{Binding HasMoreThanOneSample}" Margin="0, 4">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"  Margin="8, 4"/>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <TextBlock Text="One-Way RANOVA" Grid.Column="0" Grid.Row="8" Margin="0, 8, 8, 8" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <ListBox Items="{Binding OneWayRanovaInputs}" SelectionMode="Toggle" Grid.Column="1" Grid.Row="8" IsVisible="{Binding HasMoreThanOneSample}" Margin="0, 4">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding FileName}" VerticalAlignment="Center"  Margin="8, 4"/>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </Grid>
+      </StackPanel>
+    </ScrollViewer>
+    <StackPanel Grid.Column="2" Margin="8, 16, 16, 16" MinWidth="240">
+      <TextBlock Text="Step 03" HorizontalAlignment="Center" Margin="0, 0, 0, 16" FontSize="{StaticResource FontSizeLarge}"/>
+      <Button Content="Run and save" IsEnabled="{Binding IsAbleToRunAnalysis}" Command="{Binding OnRunAndSaveCommand}" Margin="0, 0, 0, 16"/>
+      <TextBlock Text="Data frame generation" Margin="0, 0, 0, 8"/>
+      <ProgressBar Value="{Binding LoadDataFramesProgressBarValue}" Margin="0, 0, 0, 16"/>
+      <TextBlock Text="Analysis" Margin="0, 0, 0, 8"/>
+      <ProgressBar Value="{Binding AnalysisProgressBarValue}" Margin="0, 0, 0, 16"/>
+      <TextBlock Text="{Binding ResultText}" FontSize="{StaticResource FontSizeLarge}"/>
+    </StackPanel>
+  </Grid>
+</Window>
